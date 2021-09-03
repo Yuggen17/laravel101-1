@@ -38,6 +38,13 @@ Route::get('/mahasiswa/fasilkom/anto', function () {
 //     return "Tampilkan data mahasiswa bernama $nama";
 // });
 
+Route::get('/mahasiswa', function () {
+ $nama = ' Kirana Putri';
+  $nilai = 70;
+ return view('mahasiswa',compact('nama','nilai'));
+ });
+
+
 Route::prefix('/admin')->group(function () {
 
      Route::get('/mahasiswa', function () {
