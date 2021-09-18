@@ -4,98 +4,78 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Mahasiswa;
+
 
 class MahasiswaController extends Controller
 {
     public function insert()
     {
-        $result = DB::table('mahasiswas')->insert(
+        $mahasiswa = new Mahasiswa;
+        $mahasiswa->nim = '19003036';
+        $mahasiswa->nama = 'Sari Citra Lestari';
+        $mahasiswa->tanggal_lahir = '2001-12-31';
+        $mahasiswa->ipk = 3.5;
+        $mahasiswa->save();
+
+        dump($mahasiswa);
+    }
+
+    public function massAssignment()
+    {
+        Mahasiswa::create(
             [
-                'nim' => '19003036',
-                'nama' => 'Sari Citra Lestari',
-                'tanggal_lahir' => '2001-12-31',
-                'ipk' => 3.5,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'nim' => '19021044',
+                'nama' => 'Rudi Permana',
+                'tanggal_lahir' => '2000-08-22',
+                'ipk' => 2.5,
             ]
         );
 
-        dump($result);
+        return "Berhasil di proses";
     }
 
-    public function insertBanyak()
+    public function massAssignment2()
     {
-        $result = DB::table('mahasiswas')->insert(
+        $mahasiswa1 = Mahasiswa::create(
             [
-                [
-                    'nim' => '19034036',
-                    'nama' => 'James ',
-                    'tanggal_lahir' => '2001-11-21',
-                    'ipk' => 3.2,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-
-                [
-                    'nim' => '19033566',
-                    'nama' => 'Wong ',
-                    'tanggal_lahir' => '2000-11-08',
-                    'ipk' => 3.1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
+                'nim' => '19002032',
+                'nama' => 'Rina Kumala Sari',
+                'tanggal_lahir' => '2000-06-28',
+                'ipk' => 3.4,
             ]
-
         );
+        dump($mahasiswa1);
 
+        $mahasiswa2 = Mahasiswa::create(
+            [
+                'nim' => '18012012',
+                'nama' => 'James Situmorang',
+                'tanggal_lahir' => '1999-04-02',
+                'ipk' => 2.7,
+            ]
+        );
+        dump($mahasiswa2);
+
+        $mahasiswa3 = Mahasiswa::create(
+            [
+                'nim' => '19005011',
+                'nama' => 'Riana Putria',
+                'tanggal_lahir' => '2000-11-23',
+                'ipk' => 2.9,
+            ]
+        );
+        dump($mahasiswa3);
+    }
+
+    public function all(){
+        $result = Mahasiswa::all();
         dump($result);
     }
 
-    public function update()
-    {
-        $result = DB::table('mahasiswas')
-            ->where('nama', 'Sari Cinta Lestari')
-            ->update(
-                [
-
-                    'tanggal_lahir' => '2002-12-31',
-                    'ipk' => 4.5,
-                    'updated_at' => now(),
-                ]
-
-
-            );
-
-
-
-        dump($result);
-    }
-
-    public function delete()
-    {
-        $result = DB::table('mahasiswas')
-            ->where('ipk','=',3.1)
-            ->delete();
-
-            dump($result);
-    }
-
-    public function get()
-    {
-        $result = DB::table('mahasiswas')->get();
-         
-
-            dump($result);
-    }
-
-    public function getTampil(){
-        $result = DB::table('mahasiswas')->get();
-
-        echo($result[0]->id). '<br>';
-        echo($result[0]->nim). '<br>';
-        echo($result[0]->nama). '<br>';
-        echo($result[0]->tanggal_lahir). '<br>';
-        echo($result[0]->ipk);
+     public function allView(){
+        $mahasiswas = Mahasiswa::all();
+        return view('tampil-mahasiswa',['mahasiswas' => $mahasiswas]);
     }
 
 }
