@@ -2,80 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Models\Mahasiswa;
-
 
 class MahasiswaController extends Controller
 {
-    public function insert()
+    public function index()
     {
-        $mahasiswa = new Mahasiswa;
-        $mahasiswa->nim = '19003036';
-        $mahasiswa->nama = 'Sari Citra Lestari';
-        $mahasiswa->tanggal_lahir = '2001-12-31';
-        $mahasiswa->ipk = 3.5;
-        $mahasiswa->save();
-
-        dump($mahasiswa);
+        return view('form-pendaftaran');
     }
 
-    public function massAssignment()
+    public function prosesForm(Request $request)
     {
-        Mahasiswa::create(
-            [
-                'nim' => '19021044',
-                'nama' => 'Rudi Permana',
-                'tanggal_lahir' => '2000-08-22',
-                'ipk' => 2.5,
-            ]
-        );
+        // echo $request->nim; echo "<br>";
+        // echo $request->nama; echo "<br>";
+        // echo $request->email; echo "<br>";
+        // echo $request->jenis_kelamin; echo "<br>";
+        // echo $request->jurusan; echo "<br>";
+        // echo $request->alamat;
 
-        return "Berhasil di proses";
+        $validateData = $request->validate([
+            'nim' => 'required|size:8',
+            'nama' => 'required|min:3|max:50',
+            'email' => 'required|email',
+            'jenis_kelamin' => 'required|in:P,L',
+            'jurusan' => 'required',
+            'alamat' => '',
+        ]);
+
+        dump($validateData);
+
+        echo $validateData['nim'];
+        echo "<br>";
+        echo $validateData['nama'];
+        echo "<br>";
+        echo $validateData['email'];
+        echo "<br>";
+        echo $validateData['jenis_kelamin'];
+        echo "<br>";
+        echo $validateData['jurusan'];
+        echo "<br>";
+        echo $validateData['alamat'];
     }
-
-    public function massAssignment2()
-    {
-        $mahasiswa1 = Mahasiswa::create(
-            [
-                'nim' => '19002032',
-                'nama' => 'Rina Kumala Sari',
-                'tanggal_lahir' => '2000-06-28',
-                'ipk' => 3.4,
-            ]
-        );
-        dump($mahasiswa1);
-
-        $mahasiswa2 = Mahasiswa::create(
-            [
-                'nim' => '18012012',
-                'nama' => 'James Situmorang',
-                'tanggal_lahir' => '1999-04-02',
-                'ipk' => 2.7,
-            ]
-        );
-        dump($mahasiswa2);
-
-        $mahasiswa3 = Mahasiswa::create(
-            [
-                'nim' => '19005011',
-                'nama' => 'Riana Putria',
-                'tanggal_lahir' => '2000-11-23',
-                'ipk' => 2.9,
-            ]
-        );
-        dump($mahasiswa3);
-    }
-
-    public function all(){
-        $result = Mahasiswa::all();
-        dump($result);
-    }
-
-     public function allView(){
-        $mahasiswas = Mahasiswa::all();
-        return view('tampil-mahasiswa',['mahasiswas' => $mahasiswas]);
-    }
-
 }
