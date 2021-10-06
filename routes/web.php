@@ -32,5 +32,12 @@ use App\Http\Controllers\MahasiswaController;
 // Route::get('/restore', [MahasiswaController::class,'restore']);
 // Route::get('/force-delete', [MahasiswaController::class,'forceDelete']);
 
-Route::get('/', [MahasiswaController::class,'index']);
-Route::post('/proses-form', [MahasiswaController::class,'prosesForm']);
+// Route::get('/', [MahasiswaController::class,'index']);
+// Route::post('/proses-form', [MahasiswaController::class,'prosesForm']);
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/form-pendaftaran',[MahasiswaController::class,'formPendaftaran']);
+Route::post('/proses-form',    [MahasiswaController::class,'prosesForm']);
